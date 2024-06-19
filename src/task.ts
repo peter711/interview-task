@@ -1,17 +1,16 @@
-import { getCategories } from './mockedApi';
-import { CategoryTree } from './models';
+import { Category, CategoryListElement, CategoryTree } from './models';
 
-export interface CategoryListElement {
-  name: string;
-  id: number;
-  image: string;
-  order: number;
-  children: CategoryListElement[];
-  showOnHome: boolean;
-}
+type ApiFunctionResponse = { data: Category[] };
 
-export const categoryTree = async (): Promise<CategoryListElement[]> => {
-  const res = await getCategories();
+export type CategoryTreeOptions = {
+  getApiFunction: () => Promise<ApiFunctionResponse>;
+};
+
+export const categoryTree = async (
+  options: CategoryTreeOptions
+): Promise<CategoryListElement[]> => {
+  const { getApiFunction } = options;
+  const res = await getApiFunction();
 
   if (!res.data) {
     return [];
