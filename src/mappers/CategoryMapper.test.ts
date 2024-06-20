@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { Category } from '../models';
+import { Category, CategoryTreeItem } from '../models';
 
 import { CategoryMapper } from './CategoryMapper';
 
@@ -39,6 +39,23 @@ const categoryInputs: Array<Category> = [
 categoryInputs.forEach((data, index) => {
   test(`CategoryMapper - fromCategory - should have matching snapshot - ${index}`, async (t) => {
     const result = CategoryMapper.fromCategory(data);
+    t.snapshot(result);
+  });
+});
+
+// #endregion
+
+// #region CategoryListElement
+
+const treeItems: Array<CategoryTreeItem> = [
+  CategoryTreeItem.fromCategory(categoryInputs[0]),
+  CategoryTreeItem.fromCategory(categoryInputs[1]),
+  CategoryTreeItem.fromCategory(categoryInputs[2]),
+];
+
+treeItems.forEach((data, index) => {
+  test(`CategoryMapper - toCategoryListElement - should have matching snapshot - ${index}`, async (t) => {
+    const result = CategoryMapper.toCategoryListElement(data);
     t.snapshot(result);
   });
 });
