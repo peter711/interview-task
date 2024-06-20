@@ -3,7 +3,23 @@ import { CategoryListElement } from '../models/CategoryListItem';
 import { CategoryTreeItem } from '../models/CategoryTreeItem';
 import { containsHashtag } from '../utils';
 
+/**
+ * Mapper util class for converting from Category
+ * and to CategoryListItem
+ *
+ * @export
+ * @class CategoryMapper
+ */
 export class CategoryMapper {
+  /**
+   * Converts from API data Category
+   * to CategoryTreeItem
+   *
+   * @static
+   * @param {Category} data
+   * @return {*}  {CategoryTreeItem}
+   * @memberof CategoryMapper
+   */
   static fromCategory(data: Category): CategoryTreeItem {
     const { MetaTagDescription, Title, children, id, name } = data;
 
@@ -23,6 +39,18 @@ export class CategoryMapper {
     );
   }
 
+  /**
+   * Converts tree item to CategoryListElement.
+   * Possible to overwrite specified props
+   *
+   * @static
+   * @param {CategoryTreeItem} source
+   * @param {{
+   *       showOnHome?: boolean;
+   *     }} [overwrites]
+   * @return {*}  {CategoryListElement}
+   * @memberof CategoryMapper
+   */
   static toCategoryListElement(
     source: CategoryTreeItem,
     overwrites?: {
@@ -43,6 +71,18 @@ export class CategoryMapper {
     };
   }
 
+  /**
+   * Mapping to order value according to
+   * title, then later on according to id
+   * as fallback
+   *
+   * @private
+   * @static
+   * @param {string} title
+   * @param {number} id
+   * @return {*}
+   * @memberof CategoryMapper
+   */
   private static mapToOrderValue(title: string, id: number) {
     let raw = title;
     if (containsHashtag(title)) {

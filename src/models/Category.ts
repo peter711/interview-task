@@ -1,3 +1,9 @@
+/**
+ * API response about category
+ *
+ * @export
+ * @interface Category
+ */
 export interface Category {
   id: number;
   name: string;
