@@ -49,23 +49,29 @@ export class CategoryTreeItem implements CategoryListElement {
    *
    * @static
    * @param {Category} category
+   * @param {*} [fromCategoryMapper=CategoryMapper.fromCategory]
    * @return {*}
    * @memberof CategoryTreeItem
    */
-  static fromCategory(category: Category) {
-    return CategoryMapper.fromCategory(category);
+  static fromCategory(
+    category: Category,
+    fromCategoryMapper = CategoryMapper.fromCategory
+  ) {
+    return fromCategoryMapper(category);
   }
 
   /**
    * Convert tree item to CategoryListElement
    *
    * @param {*} [{ showOnHome }={ showOnHome: this.showOnHome }]
+   * @param {*} [toCategoryListElementMapper=CategoryMapper.toCategoryListElement]
    * @return {*}  {CategoryListElement}
    * @memberof CategoryTreeItem
    */
   toCategoryListElement(
-    { showOnHome } = { showOnHome: this.showOnHome }
+    { showOnHome } = { showOnHome: this.showOnHome },
+    toCategoryListElementMapper = CategoryMapper.toCategoryListElement
   ): CategoryListElement {
-    return CategoryMapper.toCategoryListElement(this, { showOnHome });
+    return toCategoryListElementMapper(this, { showOnHome });
   }
 }
